@@ -1,0 +1,1583 @@
+diff --git a/node_modules/typescript/lib/lib.dom.d.ts b/node_modules/typescript/lib/lib.dom.d.ts
+index ac946ba..740a2dd 100644
+--- a/node_modules/typescript/lib/lib.dom.d.ts
++++ b/node_modules/typescript/lib/lib.dom.d.ts
+@@ -17,7 +17,7 @@ and limitations under the License.
+ /// <reference no-default-lib="true"/>
+ 
+ /////////////////////////////
+-/// Window APIs
++/// DomWindow APIs
+ /////////////////////////////
+ 
+ interface AddEventListenerOptions extends EventListenerOptions {
+@@ -1696,7 +1696,7 @@ interface RequestInit {
+     referrerPolicy?: ReferrerPolicy;
+     /** An AbortSignal to set request's signal. */
+     signal?: AbortSignal | null;
+-    /** Can only be null. Used to disassociate request from any Window. */
++    /** Can only be null. Used to disassociate request from any DomWindow. */
+     window?: null;
+ }
+ 
+@@ -1926,7 +1926,7 @@ interface TransitionEventInit extends EventInit {
+ 
+ interface UIEventInit extends EventInit {
+     detail?: number;
+-    view?: Window | null;
++    view?: DomWindow | null;
+     /** @deprecated */
+     which?: number;
+ }
+@@ -6820,7 +6820,7 @@ interface Document extends Node, DocumentOrShadowRoot, FontFaceSource, GlobalEve
+      */
+     readonly currentScript: HTMLOrSVGScriptElement | null;
+     /**
+-     * Returns the Window object of the active document.
++     * Returns the DomWindow object of the active document.
+      *
+      * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Document/defaultView)
+      */
+@@ -8714,7 +8714,7 @@ declare var GamepadButton: {
+ };
+ 
+ /**
+- * This Gamepad API interface contains references to gamepads connected to the system, which is what the gamepad events Window.gamepadconnected and Window.gamepaddisconnected are fired in response to.
++ * This Gamepad API interface contains references to gamepads connected to the system, which is what the gamepad events DomWindow.gamepadconnected and DomWindow.gamepaddisconnected are fired in response to.
+  * Available only in secure contexts.
+  *
+  * [MDN Reference](https://developer.mozilla.org/docs/Web/API/GamepadEvent)
+@@ -14411,7 +14411,7 @@ interface KeyboardEvent extends UIEvent {
+     /** [MDN Reference](https://developer.mozilla.org/docs/Web/API/KeyboardEvent/getModifierState) */
+     getModifierState(keyArg: string): boolean;
+     /** @deprecated */
+-    initKeyboardEvent(typeArg: string, bubblesArg?: boolean, cancelableArg?: boolean, viewArg?: Window | null, keyArg?: string, locationArg?: number, ctrlKey?: boolean, altKey?: boolean, shiftKey?: boolean, metaKey?: boolean): void;
++    initKeyboardEvent(typeArg: string, bubblesArg?: boolean, cancelableArg?: boolean, viewArg?: DomWindow | null, keyArg?: string, locationArg?: number, ctrlKey?: boolean, altKey?: boolean, shiftKey?: boolean, metaKey?: boolean): void;
+     readonly DOM_KEY_LOCATION_STANDARD: 0x00;
+     readonly DOM_KEY_LOCATION_LEFT: 0x01;
+     readonly DOM_KEY_LOCATION_RIGHT: 0x02;
+@@ -14455,7 +14455,7 @@ interface LinkStyle {
+ }
+ 
+ /**
+- * The location (URL) of the object it is linked to. Changes done on it are reflected on the object it relates to. Both the Document and Window interface have such a linked Location, accessible via Document.location and Window.location respectively.
++ * The location (URL) of the object it is linked to. Changes done on it are reflected on the object it relates to. Both the Document and DomWindow interface have such a linked Location, accessible via Document.location and DomWindow.location respectively.
+  *
+  * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Location)
+  */
+@@ -15630,7 +15630,7 @@ interface MouseEvent extends UIEvent {
+      *
+      * [MDN Reference](https://developer.mozilla.org/docs/Web/API/MouseEvent/initMouseEvent)
+      */
+-    initMouseEvent(typeArg: string, canBubbleArg: boolean, cancelableArg: boolean, viewArg: Window, detailArg: number, screenXArg: number, screenYArg: number, clientXArg: number, clientYArg: number, ctrlKeyArg: boolean, altKeyArg: boolean, shiftKeyArg: boolean, metaKeyArg: boolean, buttonArg: number, relatedTargetArg: EventTarget | null): void;
++    initMouseEvent(typeArg: string, canBubbleArg: boolean, cancelableArg: boolean, viewArg: DomWindow, detailArg: number, screenXArg: number, screenYArg: number, clientXArg: number, clientYArg: number, ctrlKeyArg: boolean, altKeyArg: boolean, shiftKeyArg: boolean, metaKeyArg: boolean, buttonArg: number, relatedTargetArg: EventTarget | null): void;
+ }
+ 
+ declare var MouseEvent: {
+@@ -16057,7 +16057,7 @@ interface NavigatorPlugins {
+ /** Available only in secure contexts. */
+ interface NavigatorStorage {
+     /** [MDN Reference](https://developer.mozilla.org/docs/Web/API/Navigator/storage) */
+-    readonly storage: StorageManager;
++    readonly storage: DomStorageManager;
+ }
+ 
+ /**
+@@ -21070,7 +21070,7 @@ declare var SecurityPolicyViolationEvent: {
+ };
+ 
+ /**
+- * A Selection object represents the range of text selected by the user or the current position of the caret. To obtain a Selection object for examination or modification, call Window.getSelection().
++ * A Selection object represents the range of text selected by the user or the current position of the caret. To obtain a Selection object for examination or modification, call DomWindow.getSelection().
+  *
+  * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Selection)
+  */
+@@ -21611,7 +21611,7 @@ interface Storage {
+     /**
+      * Removes all key/value pairs, if there are any.
+      *
+-     * Dispatches a storage event on Window objects holding an equivalent Storage object.
++     * Dispatches a storage event on DomWindow objects holding an equivalent Storage object.
+      *
+      * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Storage/clear)
+      */
+@@ -21631,7 +21631,7 @@ interface Storage {
+     /**
+      * Removes the key/value pair with the given key, if a key/value pair with the given key exists.
+      *
+-     * Dispatches a storage event on Window objects holding an equivalent Storage object.
++     * Dispatches a storage event on DomWindow objects holding an equivalent Storage object.
+      *
+      * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Storage/removeItem)
+      */
+@@ -21641,7 +21641,7 @@ interface Storage {
+      *
+      * Throws a "QuotaExceededError" DOMException exception if the new value couldn't be set. (Setting could fail if, e.g., the user has disabled storage for the site, or if the quota has been exceeded.)
+      *
+-     * Dispatches a storage event on Window objects holding an equivalent Storage object.
++     * Dispatches a storage event on DomWindow objects holding an equivalent Storage object.
+      *
+      * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Storage/setItem)
+      */
+@@ -21706,22 +21706,22 @@ declare var StorageEvent: {
+ /**
+  * Available only in secure contexts.
+  *
+- * [MDN Reference](https://developer.mozilla.org/docs/Web/API/StorageManager)
++ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/DomStorageManager)
+  */
+-interface StorageManager {
+-    /** [MDN Reference](https://developer.mozilla.org/docs/Web/API/StorageManager/estimate) */
++interface DomStorageManager {
++    /** [MDN Reference](https://developer.mozilla.org/docs/Web/API/DomStorageManager/estimate) */
+     estimate(): Promise<StorageEstimate>;
+-    /** [MDN Reference](https://developer.mozilla.org/docs/Web/API/StorageManager/getDirectory) */
++    /** [MDN Reference](https://developer.mozilla.org/docs/Web/API/DomStorageManager/getDirectory) */
+     getDirectory(): Promise<FileSystemDirectoryHandle>;
+-    /** [MDN Reference](https://developer.mozilla.org/docs/Web/API/StorageManager/persist) */
++    /** [MDN Reference](https://developer.mozilla.org/docs/Web/API/DomStorageManager/persist) */
+     persist(): Promise<boolean>;
+-    /** [MDN Reference](https://developer.mozilla.org/docs/Web/API/StorageManager/persisted) */
++    /** [MDN Reference](https://developer.mozilla.org/docs/Web/API/DomStorageManager/persisted) */
+     persisted(): Promise<boolean>;
+ }
+ 
+-declare var StorageManager: {
+-    prototype: StorageManager;
+-    new(): StorageManager;
++declare var DomStorageManager: {
++    prototype: DomStorageManager;
++    new(): DomStorageManager;
+ };
+ 
+ /** @deprecated */
+@@ -21826,7 +21826,7 @@ declare var SubmitEvent: {
+ };
+ 
+ /**
+- * This Web Crypto API interface provides a number of low-level cryptographic functions. It is accessed via the Crypto.subtle properties available in a window context (via Window.crypto).
++ * This Web Crypto API interface provides a number of low-level cryptographic functions. It is accessed via the Crypto.subtle properties available in a window context (via DomWindow.crypto).
+  * Available only in secure contexts.
+  *
+  * [MDN Reference](https://developer.mozilla.org/docs/Web/API/SubtleCrypto)
+@@ -22504,7 +22504,7 @@ interface UIEvent extends Event {
+     /** [MDN Reference](https://developer.mozilla.org/docs/Web/API/UIEvent/detail) */
+     readonly detail: number;
+     /** [MDN Reference](https://developer.mozilla.org/docs/Web/API/UIEvent/view) */
+-    readonly view: Window | null;
++    readonly view: DomWindow | null;
+     /**
+      * @deprecated
+      *
+@@ -22516,7 +22516,7 @@ interface UIEvent extends Event {
+      *
+      * [MDN Reference](https://developer.mozilla.org/docs/Web/API/UIEvent/initUIEvent)
+      */
+-    initUIEvent(typeArg: string, bubblesArg?: boolean, cancelableArg?: boolean, viewArg?: Window | null, detailArg?: number): void;
++    initUIEvent(typeArg: string, bubblesArg?: boolean, cancelableArg?: boolean, viewArg?: DomWindow | null, detailArg?: number): void;
+ }
+ 
+ declare var UIEvent: {
+@@ -25568,114 +25568,114 @@ interface WindowEventMap extends GlobalEventHandlersEventMap, WindowEventHandler
+ /**
+  * A window containing a DOM document; the document property points to the DOM document loaded in that window.
+  *
+- * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Window)
++ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/DomWindow)
+  */
+-interface Window extends EventTarget, AnimationFrameProvider, GlobalEventHandlers, WindowEventHandlers, WindowLocalStorage, WindowOrWorkerGlobalScope, WindowSessionStorage {
++interface DomWindow extends EventTarget, AnimationFrameProvider, GlobalEventHandlers, WindowEventHandlers, WindowLocalStorage, WindowOrWorkerGlobalScope, WindowSessionStorage {
+     /**
+      * @deprecated This is a legacy alias of `navigator`.
+      *
+-     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Window/navigator)
++     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/DomWindow/navigator)
+      */
+     readonly clientInformation: Navigator;
+     /**
+      * Returns true if the window has been closed, false otherwise.
+      *
+-     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Window/closed)
++     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/DomWindow/closed)
+      */
+     readonly closed: boolean;
+     /**
+      * Defines a new custom element, mapping the given name to the given constructor as an autonomous custom element.
+      *
+-     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Window/customElements)
++     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/DomWindow/customElements)
+      */
+     readonly customElements: CustomElementRegistry;
+-    /** [MDN Reference](https://developer.mozilla.org/docs/Web/API/Window/devicePixelRatio) */
++    /** [MDN Reference](https://developer.mozilla.org/docs/Web/API/DomWindow/devicePixelRatio) */
+     readonly devicePixelRatio: number;
+-    /** [MDN Reference](https://developer.mozilla.org/docs/Web/API/Window/document) */
++    /** [MDN Reference](https://developer.mozilla.org/docs/Web/API/DomWindow/document) */
+     readonly document: Document;
+     /**
+      * @deprecated
+      *
+-     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Window/event)
++     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/DomWindow/event)
+      */
+     readonly event: Event | undefined;
+     /**
+      * @deprecated
+      *
+-     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Window/external)
++     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/DomWindow/external)
+      */
+     readonly external: External;
+-    /** [MDN Reference](https://developer.mozilla.org/docs/Web/API/Window/frameElement) */
++    /** [MDN Reference](https://developer.mozilla.org/docs/Web/API/DomWindow/frameElement) */
+     readonly frameElement: Element | null;
+-    /** [MDN Reference](https://developer.mozilla.org/docs/Web/API/Window/frames) */
++    /** [MDN Reference](https://developer.mozilla.org/docs/Web/API/DomWindow/frames) */
+     readonly frames: WindowProxy;
+-    /** [MDN Reference](https://developer.mozilla.org/docs/Web/API/Window/history) */
++    /** [MDN Reference](https://developer.mozilla.org/docs/Web/API/DomWindow/history) */
+     readonly history: History;
+-    /** [MDN Reference](https://developer.mozilla.org/docs/Web/API/Window/innerHeight) */
++    /** [MDN Reference](https://developer.mozilla.org/docs/Web/API/DomWindow/innerHeight) */
+     readonly innerHeight: number;
+-    /** [MDN Reference](https://developer.mozilla.org/docs/Web/API/Window/innerWidth) */
++    /** [MDN Reference](https://developer.mozilla.org/docs/Web/API/DomWindow/innerWidth) */
+     readonly innerWidth: number;
+-    /** [MDN Reference](https://developer.mozilla.org/docs/Web/API/Window/length) */
++    /** [MDN Reference](https://developer.mozilla.org/docs/Web/API/DomWindow/length) */
+     readonly length: number;
+-    /** [MDN Reference](https://developer.mozilla.org/docs/Web/API/Window/location) */
++    /** [MDN Reference](https://developer.mozilla.org/docs/Web/API/DomWindow/location) */
+     get location(): Location;
+     set location(href: string | Location);
+     /**
+      * Returns true if the location bar is visible; otherwise, returns false.
+      *
+-     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Window/locationbar)
++     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/DomWindow/locationbar)
+      */
+     readonly locationbar: BarProp;
+     /**
+      * Returns true if the menu bar is visible; otherwise, returns false.
+      *
+-     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Window/menubar)
++     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/DomWindow/menubar)
+      */
+     readonly menubar: BarProp;
+-    /** [MDN Reference](https://developer.mozilla.org/docs/Web/API/Window/name) */
++    /** [MDN Reference](https://developer.mozilla.org/docs/Web/API/DomWindow/name) */
+     name: string;
+-    /** [MDN Reference](https://developer.mozilla.org/docs/Web/API/Window/navigator) */
++    /** [MDN Reference](https://developer.mozilla.org/docs/Web/API/DomWindow/navigator) */
+     readonly navigator: Navigator;
+     /**
+      * Available only in secure contexts.
+      *
+-     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Window/devicemotion_event)
++     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/DomWindow/devicemotion_event)
+      */
+-    ondevicemotion: ((this: Window, ev: DeviceMotionEvent) => any) | null;
++    ondevicemotion: ((this: DomWindow, ev: DeviceMotionEvent) => any) | null;
+     /**
+      * Available only in secure contexts.
+      *
+-     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Window/deviceorientation_event)
++     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/DomWindow/deviceorientation_event)
+      */
+-    ondeviceorientation: ((this: Window, ev: DeviceOrientationEvent) => any) | null;
++    ondeviceorientation: ((this: DomWindow, ev: DeviceOrientationEvent) => any) | null;
+     /**
+      * @deprecated
+      *
+-     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Window/orientationchange_event)
++     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/DomWindow/orientationchange_event)
+      */
+-    onorientationchange: ((this: Window, ev: Event) => any) | null;
+-    /** [MDN Reference](https://developer.mozilla.org/docs/Web/API/Window/opener) */
++    onorientationchange: ((this: DomWindow, ev: Event) => any) | null;
++    /** [MDN Reference](https://developer.mozilla.org/docs/Web/API/DomWindow/opener) */
+     opener: any;
+     /**
+      * @deprecated
+      *
+-     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Window/orientation)
++     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/DomWindow/orientation)
+      */
+     readonly orientation: number;
+-    /** [MDN Reference](https://developer.mozilla.org/docs/Web/API/Window/outerHeight) */
++    /** [MDN Reference](https://developer.mozilla.org/docs/Web/API/DomWindow/outerHeight) */
+     readonly outerHeight: number;
+-    /** [MDN Reference](https://developer.mozilla.org/docs/Web/API/Window/outerWidth) */
++    /** [MDN Reference](https://developer.mozilla.org/docs/Web/API/DomWindow/outerWidth) */
+     readonly outerWidth: number;
+     /**
+      * @deprecated This is a legacy alias of `scrollX`.
+      *
+-     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Window/scrollX)
++     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/DomWindow/scrollX)
+      */
+     readonly pageXOffset: number;
+     /**
+      * @deprecated This is a legacy alias of `scrollY`.
+      *
+-     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Window/scrollY)
++     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/DomWindow/scrollY)
+      */
+     readonly pageYOffset: number;
+     /**
+@@ -25683,100 +25683,100 @@ interface Window extends EventTarget, AnimationFrameProvider, GlobalEventHandler
+      *
+      * It can rarely be null e.g. for contentWindow of an iframe that is already removed from the parent.
+      *
+-     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Window/parent)
++     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/DomWindow/parent)
+      */
+     readonly parent: WindowProxy;
+     /**
+      * Returns true if the personal bar is visible; otherwise, returns false.
+      *
+-     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Window/personalbar)
++     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/DomWindow/personalbar)
+      */
+     readonly personalbar: BarProp;
+-    /** [MDN Reference](https://developer.mozilla.org/docs/Web/API/Window/screen) */
++    /** [MDN Reference](https://developer.mozilla.org/docs/Web/API/DomWindow/screen) */
+     readonly screen: Screen;
+-    /** [MDN Reference](https://developer.mozilla.org/docs/Web/API/Window/screenLeft) */
++    /** [MDN Reference](https://developer.mozilla.org/docs/Web/API/DomWindow/screenLeft) */
+     readonly screenLeft: number;
+-    /** [MDN Reference](https://developer.mozilla.org/docs/Web/API/Window/screenTop) */
++    /** [MDN Reference](https://developer.mozilla.org/docs/Web/API/DomWindow/screenTop) */
+     readonly screenTop: number;
+-    /** [MDN Reference](https://developer.mozilla.org/docs/Web/API/Window/screenX) */
++    /** [MDN Reference](https://developer.mozilla.org/docs/Web/API/DomWindow/screenX) */
+     readonly screenX: number;
+-    /** [MDN Reference](https://developer.mozilla.org/docs/Web/API/Window/screenY) */
++    /** [MDN Reference](https://developer.mozilla.org/docs/Web/API/DomWindow/screenY) */
+     readonly screenY: number;
+-    /** [MDN Reference](https://developer.mozilla.org/docs/Web/API/Window/scrollX) */
++    /** [MDN Reference](https://developer.mozilla.org/docs/Web/API/DomWindow/scrollX) */
+     readonly scrollX: number;
+-    /** [MDN Reference](https://developer.mozilla.org/docs/Web/API/Window/scrollY) */
++    /** [MDN Reference](https://developer.mozilla.org/docs/Web/API/DomWindow/scrollY) */
+     readonly scrollY: number;
+     /**
+      * Returns true if the scrollbars are visible; otherwise, returns false.
+      *
+-     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Window/scrollbars)
++     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/DomWindow/scrollbars)
+      */
+     readonly scrollbars: BarProp;
+-    /** [MDN Reference](https://developer.mozilla.org/docs/Web/API/Window/self) */
+-    readonly self: Window & typeof globalThis;
+-    /** [MDN Reference](https://developer.mozilla.org/docs/Web/API/Window/speechSynthesis) */
++    /** [MDN Reference](https://developer.mozilla.org/docs/Web/API/DomWindow/self) */
++    readonly self: DomWindow & typeof globalThis;
++    /** [MDN Reference](https://developer.mozilla.org/docs/Web/API/DomWindow/speechSynthesis) */
+     readonly speechSynthesis: SpeechSynthesis;
+     /**
+      * @deprecated
+      *
+-     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Window/status)
++     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/DomWindow/status)
+      */
+     status: string;
+     /**
+      * Returns true if the status bar is visible; otherwise, returns false.
+      *
+-     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Window/statusbar)
++     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/DomWindow/statusbar)
+      */
+     readonly statusbar: BarProp;
+     /**
+      * Returns true if the toolbar is visible; otherwise, returns false.
+      *
+-     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Window/toolbar)
++     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/DomWindow/toolbar)
+      */
+     readonly toolbar: BarProp;
+-    /** [MDN Reference](https://developer.mozilla.org/docs/Web/API/Window/top) */
++    /** [MDN Reference](https://developer.mozilla.org/docs/Web/API/DomWindow/top) */
+     readonly top: WindowProxy | null;
+-    /** [MDN Reference](https://developer.mozilla.org/docs/Web/API/Window/visualViewport) */
++    /** [MDN Reference](https://developer.mozilla.org/docs/Web/API/DomWindow/visualViewport) */
+     readonly visualViewport: VisualViewport | null;
+-    /** [MDN Reference](https://developer.mozilla.org/docs/Web/API/Window/window) */
+-    readonly window: Window & typeof globalThis;
+-    /** [MDN Reference](https://developer.mozilla.org/docs/Web/API/Window/alert) */
++    /** [MDN Reference](https://developer.mozilla.org/docs/Web/API/DomWindow/window) */
++    readonly window: DomWindow & typeof globalThis;
++    /** [MDN Reference](https://developer.mozilla.org/docs/Web/API/DomWindow/alert) */
+     alert(message?: any): void;
+-    /** [MDN Reference](https://developer.mozilla.org/docs/Web/API/Window/blur) */
++    /** [MDN Reference](https://developer.mozilla.org/docs/Web/API/DomWindow/blur) */
+     blur(): void;
+-    /** [MDN Reference](https://developer.mozilla.org/docs/Web/API/Window/cancelIdleCallback) */
++    /** [MDN Reference](https://developer.mozilla.org/docs/Web/API/DomWindow/cancelIdleCallback) */
+     cancelIdleCallback(handle: number): void;
+     /**
+      * @deprecated
+      *
+-     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Window/captureEvents)
++     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/DomWindow/captureEvents)
+      */
+     captureEvents(): void;
+     /**
+      * Closes the window.
+      *
+-     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Window/close)
++     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/DomWindow/close)
+      */
+     close(): void;
+-    /** [MDN Reference](https://developer.mozilla.org/docs/Web/API/Window/confirm) */
++    /** [MDN Reference](https://developer.mozilla.org/docs/Web/API/DomWindow/confirm) */
+     confirm(message?: string): boolean;
+     /**
+      * Moves the focus to the window's browsing context, if any.
+      *
+-     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Window/focus)
++     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/DomWindow/focus)
+      */
+     focus(): void;
+-    /** [MDN Reference](https://developer.mozilla.org/docs/Web/API/Window/getComputedStyle) */
++    /** [MDN Reference](https://developer.mozilla.org/docs/Web/API/DomWindow/getComputedStyle) */
+     getComputedStyle(elt: Element, pseudoElt?: string | null): CSSStyleDeclaration;
+-    /** [MDN Reference](https://developer.mozilla.org/docs/Web/API/Window/getSelection) */
++    /** [MDN Reference](https://developer.mozilla.org/docs/Web/API/DomWindow/getSelection) */
+     getSelection(): Selection | null;
+-    /** [MDN Reference](https://developer.mozilla.org/docs/Web/API/Window/matchMedia) */
++    /** [MDN Reference](https://developer.mozilla.org/docs/Web/API/DomWindow/matchMedia) */
+     matchMedia(query: string): MediaQueryList;
+-    /** [MDN Reference](https://developer.mozilla.org/docs/Web/API/Window/moveBy) */
++    /** [MDN Reference](https://developer.mozilla.org/docs/Web/API/DomWindow/moveBy) */
+     moveBy(x: number, y: number): void;
+-    /** [MDN Reference](https://developer.mozilla.org/docs/Web/API/Window/moveTo) */
++    /** [MDN Reference](https://developer.mozilla.org/docs/Web/API/DomWindow/moveTo) */
+     moveTo(x: number, y: number): void;
+-    /** [MDN Reference](https://developer.mozilla.org/docs/Web/API/Window/open) */
++    /** [MDN Reference](https://developer.mozilla.org/docs/Web/API/DomWindow/open) */
+     open(url?: string | URL, target?: string, features?: string): WindowProxy | null;
+     /**
+      * Posts a message to the given window. Messages can be structured objects, e.g. nested objects and arrays, can contain JavaScript values (strings, numbers, Date objects, etc), and can contain certain data objects such as File Blob, FileList, and ArrayBuffer objects.
+@@ -25789,51 +25789,51 @@ interface Window extends EventTarget, AnimationFrameProvider, GlobalEventHandler
+      *
+      * Throws a "DataCloneError" DOMException if transfer array contains duplicate objects or if message could not be cloned.
+      *
+-     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Window/postMessage)
++     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/DomWindow/postMessage)
+      */
+     postMessage(message: any, targetOrigin: string, transfer?: Transferable[]): void;
+     postMessage(message: any, options?: WindowPostMessageOptions): void;
+-    /** [MDN Reference](https://developer.mozilla.org/docs/Web/API/Window/print) */
++    /** [MDN Reference](https://developer.mozilla.org/docs/Web/API/DomWindow/print) */
+     print(): void;
+-    /** [MDN Reference](https://developer.mozilla.org/docs/Web/API/Window/prompt) */
++    /** [MDN Reference](https://developer.mozilla.org/docs/Web/API/DomWindow/prompt) */
+     prompt(message?: string, _default?: string): string | null;
+     /**
+      * @deprecated
+      *
+-     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Window/releaseEvents)
++     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/DomWindow/releaseEvents)
+      */
+     releaseEvents(): void;
+-    /** [MDN Reference](https://developer.mozilla.org/docs/Web/API/Window/requestIdleCallback) */
++    /** [MDN Reference](https://developer.mozilla.org/docs/Web/API/DomWindow/requestIdleCallback) */
+     requestIdleCallback(callback: IdleRequestCallback, options?: IdleRequestOptions): number;
+-    /** [MDN Reference](https://developer.mozilla.org/docs/Web/API/Window/resizeBy) */
++    /** [MDN Reference](https://developer.mozilla.org/docs/Web/API/DomWindow/resizeBy) */
+     resizeBy(x: number, y: number): void;
+-    /** [MDN Reference](https://developer.mozilla.org/docs/Web/API/Window/resizeTo) */
++    /** [MDN Reference](https://developer.mozilla.org/docs/Web/API/DomWindow/resizeTo) */
+     resizeTo(width: number, height: number): void;
+-    /** [MDN Reference](https://developer.mozilla.org/docs/Web/API/Window/scroll) */
++    /** [MDN Reference](https://developer.mozilla.org/docs/Web/API/DomWindow/scroll) */
+     scroll(options?: ScrollToOptions): void;
+     scroll(x: number, y: number): void;
+-    /** [MDN Reference](https://developer.mozilla.org/docs/Web/API/Window/scrollBy) */
++    /** [MDN Reference](https://developer.mozilla.org/docs/Web/API/DomWindow/scrollBy) */
+     scrollBy(options?: ScrollToOptions): void;
+     scrollBy(x: number, y: number): void;
+-    /** [MDN Reference](https://developer.mozilla.org/docs/Web/API/Window/scrollTo) */
++    /** [MDN Reference](https://developer.mozilla.org/docs/Web/API/DomWindow/scrollTo) */
+     scrollTo(options?: ScrollToOptions): void;
+     scrollTo(x: number, y: number): void;
+     /**
+      * Cancels the document load.
+      *
+-     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Window/stop)
++     * [MDN Reference](https://developer.mozilla.org/docs/Web/API/DomWindow/stop)
+      */
+     stop(): void;
+-    addEventListener<K extends keyof WindowEventMap>(type: K, listener: (this: Window, ev: WindowEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
++    addEventListener<K extends keyof WindowEventMap>(type: K, listener: (this: DomWindow, ev: WindowEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+     addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+-    removeEventListener<K extends keyof WindowEventMap>(type: K, listener: (this: Window, ev: WindowEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
++    removeEventListener<K extends keyof WindowEventMap>(type: K, listener: (this: DomWindow, ev: WindowEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+     removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
+-    [index: number]: Window;
++    [index: number]: DomWindow;
+ }
+ 
+-declare var Window: {
+-    prototype: Window;
+-    new(): Window;
++declare var DomWindow: {
++    prototype: DomWindow;
++    new(): DomWindow;
+ };
+ 
+ interface WindowEventHandlersEventMap {
+@@ -25858,41 +25858,41 @@ interface WindowEventHandlersEventMap {
+ }
+ 
+ interface WindowEventHandlers {
+-    /** [MDN Reference](https://developer.mozilla.org/docs/Web/API/Window/afterprint_event) */
++    /** [MDN Reference](https://developer.mozilla.org/docs/Web/API/DomWindow/afterprint_event) */
+     onafterprint: ((this: WindowEventHandlers, ev: Event) => any) | null;
+-    /** [MDN Reference](https://developer.mozilla.org/docs/Web/API/Window/beforeprint_event) */
++    /** [MDN Reference](https://developer.mozilla.org/docs/Web/API/DomWindow/beforeprint_event) */
+     onbeforeprint: ((this: WindowEventHandlers, ev: Event) => any) | null;
+-    /** [MDN Reference](https://developer.mozilla.org/docs/Web/API/Window/beforeunload_event) */
++    /** [MDN Reference](https://developer.mozilla.org/docs/Web/API/DomWindow/beforeunload_event) */
+     onbeforeunload: ((this: WindowEventHandlers, ev: BeforeUnloadEvent) => any) | null;
+-    /** [MDN Reference](https://developer.mozilla.org/docs/Web/API/Window/gamepadconnected_event) */
++    /** [MDN Reference](https://developer.mozilla.org/docs/Web/API/DomWindow/gamepadconnected_event) */
+     ongamepadconnected: ((this: WindowEventHandlers, ev: GamepadEvent) => any) | null;
+-    /** [MDN Reference](https://developer.mozilla.org/docs/Web/API/Window/gamepaddisconnected_event) */
++    /** [MDN Reference](https://developer.mozilla.org/docs/Web/API/DomWindow/gamepaddisconnected_event) */
+     ongamepaddisconnected: ((this: WindowEventHandlers, ev: GamepadEvent) => any) | null;
+-    /** [MDN Reference](https://developer.mozilla.org/docs/Web/API/Window/hashchange_event) */
++    /** [MDN Reference](https://developer.mozilla.org/docs/Web/API/DomWindow/hashchange_event) */
+     onhashchange: ((this: WindowEventHandlers, ev: HashChangeEvent) => any) | null;
+-    /** [MDN Reference](https://developer.mozilla.org/docs/Web/API/Window/languagechange_event) */
++    /** [MDN Reference](https://developer.mozilla.org/docs/Web/API/DomWindow/languagechange_event) */
+     onlanguagechange: ((this: WindowEventHandlers, ev: Event) => any) | null;
+-    /** [MDN Reference](https://developer.mozilla.org/docs/Web/API/Window/message_event) */
++    /** [MDN Reference](https://developer.mozilla.org/docs/Web/API/DomWindow/message_event) */
+     onmessage: ((this: WindowEventHandlers, ev: MessageEvent) => any) | null;
+-    /** [MDN Reference](https://developer.mozilla.org/docs/Web/API/Window/messageerror_event) */
++    /** [MDN Reference](https://developer.mozilla.org/docs/Web/API/DomWindow/messageerror_event) */
+     onmessageerror: ((this: WindowEventHandlers, ev: MessageEvent) => any) | null;
+-    /** [MDN Reference](https://developer.mozilla.org/docs/Web/API/Window/offline_event) */
++    /** [MDN Reference](https://developer.mozilla.org/docs/Web/API/DomWindow/offline_event) */
+     onoffline: ((this: WindowEventHandlers, ev: Event) => any) | null;
+-    /** [MDN Reference](https://developer.mozilla.org/docs/Web/API/Window/online_event) */
++    /** [MDN Reference](https://developer.mozilla.org/docs/Web/API/DomWindow/online_event) */
+     ononline: ((this: WindowEventHandlers, ev: Event) => any) | null;
+-    /** [MDN Reference](https://developer.mozilla.org/docs/Web/API/Window/pagehide_event) */
++    /** [MDN Reference](https://developer.mozilla.org/docs/Web/API/DomWindow/pagehide_event) */
+     onpagehide: ((this: WindowEventHandlers, ev: PageTransitionEvent) => any) | null;
+-    /** [MDN Reference](https://developer.mozilla.org/docs/Web/API/Window/pageshow_event) */
++    /** [MDN Reference](https://developer.mozilla.org/docs/Web/API/DomWindow/pageshow_event) */
+     onpageshow: ((this: WindowEventHandlers, ev: PageTransitionEvent) => any) | null;
+-    /** [MDN Reference](https://developer.mozilla.org/docs/Web/API/Window/popstate_event) */
++    /** [MDN Reference](https://developer.mozilla.org/docs/Web/API/DomWindow/popstate_event) */
+     onpopstate: ((this: WindowEventHandlers, ev: PopStateEvent) => any) | null;
+-    /** [MDN Reference](https://developer.mozilla.org/docs/Web/API/Window/rejectionhandled_event) */
++    /** [MDN Reference](https://developer.mozilla.org/docs/Web/API/DomWindow/rejectionhandled_event) */
+     onrejectionhandled: ((this: WindowEventHandlers, ev: PromiseRejectionEvent) => any) | null;
+-    /** [MDN Reference](https://developer.mozilla.org/docs/Web/API/Window/storage_event) */
++    /** [MDN Reference](https://developer.mozilla.org/docs/Web/API/DomWindow/storage_event) */
+     onstorage: ((this: WindowEventHandlers, ev: StorageEvent) => any) | null;
+-    /** [MDN Reference](https://developer.mozilla.org/docs/Web/API/Window/unhandledrejection_event) */
++    /** [MDN Reference](https://developer.mozilla.org/docs/Web/API/DomWindow/unhandledrejection_event) */
+     onunhandledrejection: ((this: WindowEventHandlers, ev: PromiseRejectionEvent) => any) | null;
+-    /** [MDN Reference](https://developer.mozilla.org/docs/Web/API/Window/unload_event) */
++    /** [MDN Reference](https://developer.mozilla.org/docs/Web/API/DomWindow/unload_event) */
+     onunload: ((this: WindowEventHandlers, ev: Event) => any) | null;
+     addEventListener<K extends keyof WindowEventHandlersEventMap>(type: K, listener: (this: WindowEventHandlers, ev: WindowEventHandlersEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+     addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+@@ -25901,7 +25901,7 @@ interface WindowEventHandlers {
+ }
+ 
+ interface WindowLocalStorage {
+-    /** [MDN Reference](https://developer.mozilla.org/docs/Web/API/Window/localStorage) */
++    /** [MDN Reference](https://developer.mozilla.org/docs/Web/API/DomWindow/localStorage) */
+     readonly localStorage: Storage;
+ }
+ 
+@@ -25950,7 +25950,7 @@ interface WindowOrWorkerGlobalScope {
+ }
+ 
+ interface WindowSessionStorage {
+-    /** [MDN Reference](https://developer.mozilla.org/docs/Web/API/Window/sessionStorage) */
++    /** [MDN Reference](https://developer.mozilla.org/docs/Web/API/DomWindow/sessionStorage) */
+     readonly sessionStorage: Storage;
+ }
+ 
+@@ -26135,11 +26135,11 @@ interface XMLHttpRequest extends XMLHttpRequestEventTarget {
+      *
+      * Can be set to change the response type. Values are: the empty string (default), "arraybuffer", "blob", "document", "json", and "text".
+      *
+-     * When set: setting to "document" is ignored if current global object is not a Window object.
++     * When set: setting to "document" is ignored if current global object is not a DomWindow object.
+      *
+      * When set: throws an "InvalidStateError" DOMException if state is loading or done.
+      *
+-     * When set: throws an "InvalidAccessError" DOMException if the synchronous flag is set and current global object is a Window object.
++     * When set: throws an "InvalidAccessError" DOMException if the synchronous flag is set and current global object is a DomWindow object.
+      *
+      * [MDN Reference](https://developer.mozilla.org/docs/Web/API/XMLHttpRequest/responseType)
+      */
+@@ -26161,7 +26161,7 @@ interface XMLHttpRequest extends XMLHttpRequestEventTarget {
+     /**
+      * Can be set to a time in milliseconds. When set to a non-zero value will cause fetching to terminate after the given time has passed. When the time has passed, the request has not yet completed, and this's synchronous flag is unset, a timeout event will then be dispatched, or a "TimeoutError" DOMException will be thrown otherwise (for the send() method).
+      *
+-     * When set: throws an "InvalidAccessError" DOMException if the synchronous flag is set and current global object is a Window object.
++     * When set: throws an "InvalidAccessError" DOMException if the synchronous flag is set and current global object is a DomWindow object.
+      *
+      * [MDN Reference](https://developer.mozilla.org/docs/Web/API/XMLHttpRequest/timeout)
+      */
+@@ -26197,7 +26197,7 @@ interface XMLHttpRequest extends XMLHttpRequestEventTarget {
+      *
+      * Throws a "SecurityError" DOMException if method is a case-insensitive match for `CONNECT`, `TRACE`, or `TRACK`.
+      *
+-     * Throws an "InvalidAccessError" DOMException if async is false, current global object is a Window object, and the timeout attribute is not zero or the responseType attribute is not the empty string.
++     * Throws an "InvalidAccessError" DOMException if async is false, current global object is a DomWindow object, and the timeout attribute is not zero or the responseType attribute is not the empty string.
+      *
+      * [MDN Reference](https://developer.mozilla.org/docs/Web/API/XMLHttpRequest/open)
+      */
+@@ -27179,108 +27179,108 @@ declare var Option: {
+ /**
+  * @deprecated This is a legacy alias of `navigator`.
+  *
+- * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Window/navigator)
++ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/DomWindow/navigator)
+  */
+ declare var clientInformation: Navigator;
+ /**
+  * Returns true if the window has been closed, false otherwise.
+  *
+- * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Window/closed)
++ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/DomWindow/closed)
+  */
+ declare var closed: boolean;
+ /**
+  * Defines a new custom element, mapping the given name to the given constructor as an autonomous custom element.
+  *
+- * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Window/customElements)
++ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/DomWindow/customElements)
+  */
+ declare var customElements: CustomElementRegistry;
+-/** [MDN Reference](https://developer.mozilla.org/docs/Web/API/Window/devicePixelRatio) */
++/** [MDN Reference](https://developer.mozilla.org/docs/Web/API/DomWindow/devicePixelRatio) */
+ declare var devicePixelRatio: number;
+-/** [MDN Reference](https://developer.mozilla.org/docs/Web/API/Window/document) */
++/** [MDN Reference](https://developer.mozilla.org/docs/Web/API/DomWindow/document) */
+ declare var document: Document;
+ /**
+  * @deprecated
+  *
+- * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Window/event)
++ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/DomWindow/event)
+  */
+ declare var event: Event | undefined;
+ /**
+  * @deprecated
+  *
+- * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Window/external)
++ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/DomWindow/external)
+  */
+ declare var external: External;
+-/** [MDN Reference](https://developer.mozilla.org/docs/Web/API/Window/frameElement) */
++/** [MDN Reference](https://developer.mozilla.org/docs/Web/API/DomWindow/frameElement) */
+ declare var frameElement: Element | null;
+-/** [MDN Reference](https://developer.mozilla.org/docs/Web/API/Window/frames) */
++/** [MDN Reference](https://developer.mozilla.org/docs/Web/API/DomWindow/frames) */
+ declare var frames: WindowProxy;
+-/** [MDN Reference](https://developer.mozilla.org/docs/Web/API/Window/history) */
++/** [MDN Reference](https://developer.mozilla.org/docs/Web/API/DomWindow/history) */
+ declare var history: History;
+-/** [MDN Reference](https://developer.mozilla.org/docs/Web/API/Window/innerHeight) */
++/** [MDN Reference](https://developer.mozilla.org/docs/Web/API/DomWindow/innerHeight) */
+ declare var innerHeight: number;
+-/** [MDN Reference](https://developer.mozilla.org/docs/Web/API/Window/innerWidth) */
++/** [MDN Reference](https://developer.mozilla.org/docs/Web/API/DomWindow/innerWidth) */
+ declare var innerWidth: number;
+-/** [MDN Reference](https://developer.mozilla.org/docs/Web/API/Window/length) */
++/** [MDN Reference](https://developer.mozilla.org/docs/Web/API/DomWindow/length) */
+ declare var length: number;
+-/** [MDN Reference](https://developer.mozilla.org/docs/Web/API/Window/location) */
++/** [MDN Reference](https://developer.mozilla.org/docs/Web/API/DomWindow/location) */
+ declare var location: Location;
+ /**
+  * Returns true if the location bar is visible; otherwise, returns false.
+  *
+- * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Window/locationbar)
++ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/DomWindow/locationbar)
+  */
+ declare var locationbar: BarProp;
+ /**
+  * Returns true if the menu bar is visible; otherwise, returns false.
+  *
+- * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Window/menubar)
++ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/DomWindow/menubar)
+  */
+ declare var menubar: BarProp;
+-/** [MDN Reference](https://developer.mozilla.org/docs/Web/API/Window/name) */
++/** [MDN Reference](https://developer.mozilla.org/docs/Web/API/DomWindow/name) */
+ /** @deprecated */
+ declare const name: void;
+-/** [MDN Reference](https://developer.mozilla.org/docs/Web/API/Window/navigator) */
++/** [MDN Reference](https://developer.mozilla.org/docs/Web/API/DomWindow/navigator) */
+ declare var navigator: Navigator;
+ /**
+  * Available only in secure contexts.
+  *
+- * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Window/devicemotion_event)
++ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/DomWindow/devicemotion_event)
+  */
+-declare var ondevicemotion: ((this: Window, ev: DeviceMotionEvent) => any) | null;
++declare var ondevicemotion: ((this: DomWindow, ev: DeviceMotionEvent) => any) | null;
+ /**
+  * Available only in secure contexts.
+  *
+- * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Window/deviceorientation_event)
++ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/DomWindow/deviceorientation_event)
+  */
+-declare var ondeviceorientation: ((this: Window, ev: DeviceOrientationEvent) => any) | null;
++declare var ondeviceorientation: ((this: DomWindow, ev: DeviceOrientationEvent) => any) | null;
+ /**
+  * @deprecated
+  *
+- * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Window/orientationchange_event)
++ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/DomWindow/orientationchange_event)
+  */
+-declare var onorientationchange: ((this: Window, ev: Event) => any) | null;
+-/** [MDN Reference](https://developer.mozilla.org/docs/Web/API/Window/opener) */
++declare var onorientationchange: ((this: DomWindow, ev: Event) => any) | null;
++/** [MDN Reference](https://developer.mozilla.org/docs/Web/API/DomWindow/opener) */
+ declare var opener: any;
+ /**
+  * @deprecated
+  *
+- * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Window/orientation)
++ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/DomWindow/orientation)
+  */
+ declare var orientation: number;
+-/** [MDN Reference](https://developer.mozilla.org/docs/Web/API/Window/outerHeight) */
++/** [MDN Reference](https://developer.mozilla.org/docs/Web/API/DomWindow/outerHeight) */
+ declare var outerHeight: number;
+-/** [MDN Reference](https://developer.mozilla.org/docs/Web/API/Window/outerWidth) */
++/** [MDN Reference](https://developer.mozilla.org/docs/Web/API/DomWindow/outerWidth) */
+ declare var outerWidth: number;
+ /**
+  * @deprecated This is a legacy alias of `scrollX`.
+  *
+- * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Window/scrollX)
++ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/DomWindow/scrollX)
+  */
+ declare var pageXOffset: number;
+ /**
+  * @deprecated This is a legacy alias of `scrollY`.
+  *
+- * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Window/scrollY)
++ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/DomWindow/scrollY)
+  */
+ declare var pageYOffset: number;
+ /**
+@@ -27288,100 +27288,100 @@ declare var pageYOffset: number;
+  *
+  * It can rarely be null e.g. for contentWindow of an iframe that is already removed from the parent.
+  *
+- * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Window/parent)
++ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/DomWindow/parent)
+  */
+ declare var parent: WindowProxy;
+ /**
+  * Returns true if the personal bar is visible; otherwise, returns false.
+  *
+- * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Window/personalbar)
++ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/DomWindow/personalbar)
+  */
+ declare var personalbar: BarProp;
+-/** [MDN Reference](https://developer.mozilla.org/docs/Web/API/Window/screen) */
++/** [MDN Reference](https://developer.mozilla.org/docs/Web/API/DomWindow/screen) */
+ declare var screen: Screen;
+-/** [MDN Reference](https://developer.mozilla.org/docs/Web/API/Window/screenLeft) */
++/** [MDN Reference](https://developer.mozilla.org/docs/Web/API/DomWindow/screenLeft) */
+ declare var screenLeft: number;
+-/** [MDN Reference](https://developer.mozilla.org/docs/Web/API/Window/screenTop) */
++/** [MDN Reference](https://developer.mozilla.org/docs/Web/API/DomWindow/screenTop) */
+ declare var screenTop: number;
+-/** [MDN Reference](https://developer.mozilla.org/docs/Web/API/Window/screenX) */
++/** [MDN Reference](https://developer.mozilla.org/docs/Web/API/DomWindow/screenX) */
+ declare var screenX: number;
+-/** [MDN Reference](https://developer.mozilla.org/docs/Web/API/Window/screenY) */
++/** [MDN Reference](https://developer.mozilla.org/docs/Web/API/DomWindow/screenY) */
+ declare var screenY: number;
+-/** [MDN Reference](https://developer.mozilla.org/docs/Web/API/Window/scrollX) */
++/** [MDN Reference](https://developer.mozilla.org/docs/Web/API/DomWindow/scrollX) */
+ declare var scrollX: number;
+-/** [MDN Reference](https://developer.mozilla.org/docs/Web/API/Window/scrollY) */
++/** [MDN Reference](https://developer.mozilla.org/docs/Web/API/DomWindow/scrollY) */
+ declare var scrollY: number;
+ /**
+  * Returns true if the scrollbars are visible; otherwise, returns false.
+  *
+- * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Window/scrollbars)
++ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/DomWindow/scrollbars)
+  */
+ declare var scrollbars: BarProp;
+-/** [MDN Reference](https://developer.mozilla.org/docs/Web/API/Window/self) */
+-declare var self: Window & typeof globalThis;
+-/** [MDN Reference](https://developer.mozilla.org/docs/Web/API/Window/speechSynthesis) */
++/** [MDN Reference](https://developer.mozilla.org/docs/Web/API/DomWindow/self) */
++declare var self: DomWindow & typeof globalThis;
++/** [MDN Reference](https://developer.mozilla.org/docs/Web/API/DomWindow/speechSynthesis) */
+ declare var speechSynthesis: SpeechSynthesis;
+ /**
+  * @deprecated
+  *
+- * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Window/status)
++ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/DomWindow/status)
+  */
+ declare var status: string;
+ /**
+  * Returns true if the status bar is visible; otherwise, returns false.
+  *
+- * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Window/statusbar)
++ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/DomWindow/statusbar)
+  */
+ declare var statusbar: BarProp;
+ /**
+  * Returns true if the toolbar is visible; otherwise, returns false.
+  *
+- * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Window/toolbar)
++ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/DomWindow/toolbar)
+  */
+ declare var toolbar: BarProp;
+-/** [MDN Reference](https://developer.mozilla.org/docs/Web/API/Window/top) */
++/** [MDN Reference](https://developer.mozilla.org/docs/Web/API/DomWindow/top) */
+ declare var top: WindowProxy | null;
+-/** [MDN Reference](https://developer.mozilla.org/docs/Web/API/Window/visualViewport) */
++/** [MDN Reference](https://developer.mozilla.org/docs/Web/API/DomWindow/visualViewport) */
+ declare var visualViewport: VisualViewport | null;
+-/** [MDN Reference](https://developer.mozilla.org/docs/Web/API/Window/window) */
+-declare var window: Window & typeof globalThis;
+-/** [MDN Reference](https://developer.mozilla.org/docs/Web/API/Window/alert) */
++/** [MDN Reference](https://developer.mozilla.org/docs/Web/API/DomWindow/window) */
++declare var window: DomWindow & typeof globalThis;
++/** [MDN Reference](https://developer.mozilla.org/docs/Web/API/DomWindow/alert) */
+ declare function alert(message?: any): void;
+-/** [MDN Reference](https://developer.mozilla.org/docs/Web/API/Window/blur) */
++/** [MDN Reference](https://developer.mozilla.org/docs/Web/API/DomWindow/blur) */
+ declare function blur(): void;
+-/** [MDN Reference](https://developer.mozilla.org/docs/Web/API/Window/cancelIdleCallback) */
++/** [MDN Reference](https://developer.mozilla.org/docs/Web/API/DomWindow/cancelIdleCallback) */
+ declare function cancelIdleCallback(handle: number): void;
+ /**
+  * @deprecated
+  *
+- * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Window/captureEvents)
++ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/DomWindow/captureEvents)
+  */
+ declare function captureEvents(): void;
+ /**
+  * Closes the window.
+  *
+- * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Window/close)
++ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/DomWindow/close)
+  */
+ declare function close(): void;
+-/** [MDN Reference](https://developer.mozilla.org/docs/Web/API/Window/confirm) */
++/** [MDN Reference](https://developer.mozilla.org/docs/Web/API/DomWindow/confirm) */
+ declare function confirm(message?: string): boolean;
+ /**
+  * Moves the focus to the window's browsing context, if any.
+  *
+- * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Window/focus)
++ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/DomWindow/focus)
+  */
+ declare function focus(): void;
+-/** [MDN Reference](https://developer.mozilla.org/docs/Web/API/Window/getComputedStyle) */
++/** [MDN Reference](https://developer.mozilla.org/docs/Web/API/DomWindow/getComputedStyle) */
+ declare function getComputedStyle(elt: Element, pseudoElt?: string | null): CSSStyleDeclaration;
+-/** [MDN Reference](https://developer.mozilla.org/docs/Web/API/Window/getSelection) */
++/** [MDN Reference](https://developer.mozilla.org/docs/Web/API/DomWindow/getSelection) */
+ declare function getSelection(): Selection | null;
+-/** [MDN Reference](https://developer.mozilla.org/docs/Web/API/Window/matchMedia) */
++/** [MDN Reference](https://developer.mozilla.org/docs/Web/API/DomWindow/matchMedia) */
+ declare function matchMedia(query: string): MediaQueryList;
+-/** [MDN Reference](https://developer.mozilla.org/docs/Web/API/Window/moveBy) */
++/** [MDN Reference](https://developer.mozilla.org/docs/Web/API/DomWindow/moveBy) */
+ declare function moveBy(x: number, y: number): void;
+-/** [MDN Reference](https://developer.mozilla.org/docs/Web/API/Window/moveTo) */
++/** [MDN Reference](https://developer.mozilla.org/docs/Web/API/DomWindow/moveTo) */
+ declare function moveTo(x: number, y: number): void;
+-/** [MDN Reference](https://developer.mozilla.org/docs/Web/API/Window/open) */
++/** [MDN Reference](https://developer.mozilla.org/docs/Web/API/DomWindow/open) */
+ declare function open(url?: string | URL, target?: string, features?: string): WindowProxy | null;
+ /**
+  * Posts a message to the given window. Messages can be structured objects, e.g. nested objects and arrays, can contain JavaScript values (strings, numbers, Date objects, etc), and can contain certain data objects such as File Blob, FileList, and ArrayBuffer objects.
+@@ -27394,39 +27394,39 @@ declare function open(url?: string | URL, target?: string, features?: string): W
+  *
+  * Throws a "DataCloneError" DOMException if transfer array contains duplicate objects or if message could not be cloned.
+  *
+- * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Window/postMessage)
++ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/DomWindow/postMessage)
+  */
+ declare function postMessage(message: any, targetOrigin: string, transfer?: Transferable[]): void;
+ declare function postMessage(message: any, options?: WindowPostMessageOptions): void;
+-/** [MDN Reference](https://developer.mozilla.org/docs/Web/API/Window/print) */
++/** [MDN Reference](https://developer.mozilla.org/docs/Web/API/DomWindow/print) */
+ declare function print(): void;
+-/** [MDN Reference](https://developer.mozilla.org/docs/Web/API/Window/prompt) */
++/** [MDN Reference](https://developer.mozilla.org/docs/Web/API/DomWindow/prompt) */
+ declare function prompt(message?: string, _default?: string): string | null;
+ /**
+  * @deprecated
+  *
+- * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Window/releaseEvents)
++ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/DomWindow/releaseEvents)
+  */
+ declare function releaseEvents(): void;
+-/** [MDN Reference](https://developer.mozilla.org/docs/Web/API/Window/requestIdleCallback) */
++/** [MDN Reference](https://developer.mozilla.org/docs/Web/API/DomWindow/requestIdleCallback) */
+ declare function requestIdleCallback(callback: IdleRequestCallback, options?: IdleRequestOptions): number;
+-/** [MDN Reference](https://developer.mozilla.org/docs/Web/API/Window/resizeBy) */
++/** [MDN Reference](https://developer.mozilla.org/docs/Web/API/DomWindow/resizeBy) */
+ declare function resizeBy(x: number, y: number): void;
+-/** [MDN Reference](https://developer.mozilla.org/docs/Web/API/Window/resizeTo) */
++/** [MDN Reference](https://developer.mozilla.org/docs/Web/API/DomWindow/resizeTo) */
+ declare function resizeTo(width: number, height: number): void;
+-/** [MDN Reference](https://developer.mozilla.org/docs/Web/API/Window/scroll) */
++/** [MDN Reference](https://developer.mozilla.org/docs/Web/API/DomWindow/scroll) */
+ declare function scroll(options?: ScrollToOptions): void;
+ declare function scroll(x: number, y: number): void;
+-/** [MDN Reference](https://developer.mozilla.org/docs/Web/API/Window/scrollBy) */
++/** [MDN Reference](https://developer.mozilla.org/docs/Web/API/DomWindow/scrollBy) */
+ declare function scrollBy(options?: ScrollToOptions): void;
+ declare function scrollBy(x: number, y: number): void;
+-/** [MDN Reference](https://developer.mozilla.org/docs/Web/API/Window/scrollTo) */
++/** [MDN Reference](https://developer.mozilla.org/docs/Web/API/DomWindow/scrollTo) */
+ declare function scrollTo(options?: ScrollToOptions): void;
+ declare function scrollTo(x: number, y: number): void;
+ /**
+  * Cancels the document load.
+  *
+- * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Window/stop)
++ * [MDN Reference](https://developer.mozilla.org/docs/Web/API/DomWindow/stop)
+  */
+ declare function stop(): void;
+ declare function toString(): string;
+@@ -27444,138 +27444,138 @@ declare function requestAnimationFrame(callback: FrameRequestCallback): number;
+  *
+  * [MDN Reference](https://developer.mozilla.org/docs/Web/API/HTMLMediaElement/abort_event)
+  */
+-declare var onabort: ((this: Window, ev: UIEvent) => any) | null;
++declare var onabort: ((this: DomWindow, ev: UIEvent) => any) | null;
+ /** [MDN Reference](https://developer.mozilla.org/docs/Web/API/Element/animationcancel_event) */
+-declare var onanimationcancel: ((this: Window, ev: AnimationEvent) => any) | null;
++declare var onanimationcancel: ((this: DomWindow, ev: AnimationEvent) => any) | null;
+ /** [MDN Reference](https://developer.mozilla.org/docs/Web/API/Element/animationend_event) */
+-declare var onanimationend: ((this: Window, ev: AnimationEvent) => any) | null;
++declare var onanimationend: ((this: DomWindow, ev: AnimationEvent) => any) | null;
+ /** [MDN Reference](https://developer.mozilla.org/docs/Web/API/Element/animationiteration_event) */
+-declare var onanimationiteration: ((this: Window, ev: AnimationEvent) => any) | null;
++declare var onanimationiteration: ((this: DomWindow, ev: AnimationEvent) => any) | null;
+ /** [MDN Reference](https://developer.mozilla.org/docs/Web/API/Element/animationstart_event) */
+-declare var onanimationstart: ((this: Window, ev: AnimationEvent) => any) | null;
++declare var onanimationstart: ((this: DomWindow, ev: AnimationEvent) => any) | null;
+ /** [MDN Reference](https://developer.mozilla.org/docs/Web/API/Element/auxclick_event) */
+-declare var onauxclick: ((this: Window, ev: MouseEvent) => any) | null;
++declare var onauxclick: ((this: DomWindow, ev: MouseEvent) => any) | null;
+ /** [MDN Reference](https://developer.mozilla.org/docs/Web/API/HTMLElement/beforeinput_event) */
+-declare var onbeforeinput: ((this: Window, ev: InputEvent) => any) | null;
++declare var onbeforeinput: ((this: DomWindow, ev: InputEvent) => any) | null;
+ /**
+  * Fires when the object loses the input focus.
+  * @param ev The focus event.
+  *
+  * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Element/blur_event)
+  */
+-declare var onblur: ((this: Window, ev: FocusEvent) => any) | null;
++declare var onblur: ((this: DomWindow, ev: FocusEvent) => any) | null;
+ /** [MDN Reference](https://developer.mozilla.org/docs/Web/API/HTMLDialogElement/cancel_event) */
+-declare var oncancel: ((this: Window, ev: Event) => any) | null;
++declare var oncancel: ((this: DomWindow, ev: Event) => any) | null;
+ /**
+  * Occurs when playback is possible, but would require further buffering.
+  * @param ev The event.
+  *
+  * [MDN Reference](https://developer.mozilla.org/docs/Web/API/HTMLMediaElement/canplay_event)
+  */
+-declare var oncanplay: ((this: Window, ev: Event) => any) | null;
++declare var oncanplay: ((this: DomWindow, ev: Event) => any) | null;
+ /** [MDN Reference](https://developer.mozilla.org/docs/Web/API/HTMLMediaElement/canplaythrough_event) */
+-declare var oncanplaythrough: ((this: Window, ev: Event) => any) | null;
++declare var oncanplaythrough: ((this: DomWindow, ev: Event) => any) | null;
+ /**
+  * Fires when the contents of the object or selection have changed.
+  * @param ev The event.
+  *
+  * [MDN Reference](https://developer.mozilla.org/docs/Web/API/HTMLElement/change_event)
+  */
+-declare var onchange: ((this: Window, ev: Event) => any) | null;
++declare var onchange: ((this: DomWindow, ev: Event) => any) | null;
+ /**
+  * Fires when the user clicks the left mouse button on the object
+  * @param ev The mouse event.
+  *
+  * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Element/click_event)
+  */
+-declare var onclick: ((this: Window, ev: MouseEvent) => any) | null;
++declare var onclick: ((this: DomWindow, ev: MouseEvent) => any) | null;
+ /** [MDN Reference](https://developer.mozilla.org/docs/Web/API/HTMLDialogElement/close_event) */
+-declare var onclose: ((this: Window, ev: Event) => any) | null;
++declare var onclose: ((this: DomWindow, ev: Event) => any) | null;
+ /**
+  * Fires when the user clicks the right mouse button in the client area, opening the context menu.
+  * @param ev The mouse event.
+  *
+  * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Element/contextmenu_event)
+  */
+-declare var oncontextmenu: ((this: Window, ev: MouseEvent) => any) | null;
++declare var oncontextmenu: ((this: DomWindow, ev: MouseEvent) => any) | null;
+ /** [MDN Reference](https://developer.mozilla.org/docs/Web/API/Element/copy_event) */
+-declare var oncopy: ((this: Window, ev: ClipboardEvent) => any) | null;
++declare var oncopy: ((this: DomWindow, ev: ClipboardEvent) => any) | null;
+ /** [MDN Reference](https://developer.mozilla.org/docs/Web/API/HTMLTrackElement/cuechange_event) */
+-declare var oncuechange: ((this: Window, ev: Event) => any) | null;
++declare var oncuechange: ((this: DomWindow, ev: Event) => any) | null;
+ /** [MDN Reference](https://developer.mozilla.org/docs/Web/API/Element/cut_event) */
+-declare var oncut: ((this: Window, ev: ClipboardEvent) => any) | null;
++declare var oncut: ((this: DomWindow, ev: ClipboardEvent) => any) | null;
+ /**
+  * Fires when the user double-clicks the object.
+  * @param ev The mouse event.
+  *
+  * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Element/dblclick_event)
+  */
+-declare var ondblclick: ((this: Window, ev: MouseEvent) => any) | null;
++declare var ondblclick: ((this: DomWindow, ev: MouseEvent) => any) | null;
+ /**
+  * Fires on the source object continuously during a drag operation.
+  * @param ev The event.
+  *
+  * [MDN Reference](https://developer.mozilla.org/docs/Web/API/HTMLElement/drag_event)
+  */
+-declare var ondrag: ((this: Window, ev: DragEvent) => any) | null;
++declare var ondrag: ((this: DomWindow, ev: DragEvent) => any) | null;
+ /**
+  * Fires on the source object when the user releases the mouse at the close of a drag operation.
+  * @param ev The event.
+  *
+  * [MDN Reference](https://developer.mozilla.org/docs/Web/API/HTMLElement/dragend_event)
+  */
+-declare var ondragend: ((this: Window, ev: DragEvent) => any) | null;
++declare var ondragend: ((this: DomWindow, ev: DragEvent) => any) | null;
+ /**
+  * Fires on the target element when the user drags the object to a valid drop target.
+  * @param ev The drag event.
+  *
+  * [MDN Reference](https://developer.mozilla.org/docs/Web/API/HTMLElement/dragenter_event)
+  */
+-declare var ondragenter: ((this: Window, ev: DragEvent) => any) | null;
++declare var ondragenter: ((this: DomWindow, ev: DragEvent) => any) | null;
+ /**
+  * Fires on the target object when the user moves the mouse out of a valid drop target during a drag operation.
+  * @param ev The drag event.
+  *
+  * [MDN Reference](https://developer.mozilla.org/docs/Web/API/HTMLElement/dragleave_event)
+  */
+-declare var ondragleave: ((this: Window, ev: DragEvent) => any) | null;
++declare var ondragleave: ((this: DomWindow, ev: DragEvent) => any) | null;
+ /**
+  * Fires on the target element continuously while the user drags the object over a valid drop target.
+  * @param ev The event.
+  *
+  * [MDN Reference](https://developer.mozilla.org/docs/Web/API/HTMLElement/dragover_event)
+  */
+-declare var ondragover: ((this: Window, ev: DragEvent) => any) | null;
++declare var ondragover: ((this: DomWindow, ev: DragEvent) => any) | null;
+ /**
+  * Fires on the source object when the user starts to drag a text selection or selected object.
+  * @param ev The event.
+  *
+  * [MDN Reference](https://developer.mozilla.org/docs/Web/API/HTMLElement/dragstart_event)
+  */
+-declare var ondragstart: ((this: Window, ev: DragEvent) => any) | null;
++declare var ondragstart: ((this: DomWindow, ev: DragEvent) => any) | null;
+ /** [MDN Reference](https://developer.mozilla.org/docs/Web/API/HTMLElement/drop_event) */
+-declare var ondrop: ((this: Window, ev: DragEvent) => any) | null;
++declare var ondrop: ((this: DomWindow, ev: DragEvent) => any) | null;
+ /**
+  * Occurs when the duration attribute is updated.
+  * @param ev The event.
+  *
+  * [MDN Reference](https://developer.mozilla.org/docs/Web/API/HTMLMediaElement/durationchange_event)
+  */
+-declare var ondurationchange: ((this: Window, ev: Event) => any) | null;
++declare var ondurationchange: ((this: DomWindow, ev: Event) => any) | null;
+ /**
+  * Occurs when the media element is reset to its initial state.
+  * @param ev The event.
+  *
+  * [MDN Reference](https://developer.mozilla.org/docs/Web/API/HTMLMediaElement/emptied_event)
+  */
+-declare var onemptied: ((this: Window, ev: Event) => any) | null;
++declare var onemptied: ((this: DomWindow, ev: Event) => any) | null;
+ /**
+  * Occurs when the end of playback is reached.
+  * @param ev The event
+  *
+  * [MDN Reference](https://developer.mozilla.org/docs/Web/API/HTMLMediaElement/ended_event)
+  */
+-declare var onended: ((this: Window, ev: Event) => any) | null;
++declare var onended: ((this: DomWindow, ev: Event) => any) | null;
+ /**
+  * Fires when an error occurs during object loading.
+  * @param ev The event.
+@@ -27589,22 +27589,22 @@ declare var onerror: OnErrorEventHandler;
+  *
+  * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Element/focus_event)
+  */
+-declare var onfocus: ((this: Window, ev: FocusEvent) => any) | null;
++declare var onfocus: ((this: DomWindow, ev: FocusEvent) => any) | null;
+ /** [MDN Reference](https://developer.mozilla.org/docs/Web/API/HTMLFormElement/formdata_event) */
+-declare var onformdata: ((this: Window, ev: FormDataEvent) => any) | null;
++declare var onformdata: ((this: DomWindow, ev: FormDataEvent) => any) | null;
+ /** [MDN Reference](https://developer.mozilla.org/docs/Web/API/Element/gotpointercapture_event) */
+-declare var ongotpointercapture: ((this: Window, ev: PointerEvent) => any) | null;
++declare var ongotpointercapture: ((this: DomWindow, ev: PointerEvent) => any) | null;
+ /** [MDN Reference](https://developer.mozilla.org/docs/Web/API/HTMLElement/input_event) */
+-declare var oninput: ((this: Window, ev: Event) => any) | null;
++declare var oninput: ((this: DomWindow, ev: Event) => any) | null;
+ /** [MDN Reference](https://developer.mozilla.org/docs/Web/API/HTMLInputElement/invalid_event) */
+-declare var oninvalid: ((this: Window, ev: Event) => any) | null;
++declare var oninvalid: ((this: DomWindow, ev: Event) => any) | null;
+ /**
+  * Fires when the user presses a key.
+  * @param ev The keyboard event
+  *
+  * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Element/keydown_event)
+  */
+-declare var onkeydown: ((this: Window, ev: KeyboardEvent) => any) | null;
++declare var onkeydown: ((this: DomWindow, ev: KeyboardEvent) => any) | null;
+ /**
+  * Fires when the user presses an alphanumeric key.
+  * @param ev The event.
+@@ -27612,301 +27612,301 @@ declare var onkeydown: ((this: Window, ev: KeyboardEvent) => any) | null;
+  *
+  * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Element/keypress_event)
+  */
+-declare var onkeypress: ((this: Window, ev: KeyboardEvent) => any) | null;
++declare var onkeypress: ((this: DomWindow, ev: KeyboardEvent) => any) | null;
+ /**
+  * Fires when the user releases a key.
+  * @param ev The keyboard event
+  *
+  * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Element/keyup_event)
+  */
+-declare var onkeyup: ((this: Window, ev: KeyboardEvent) => any) | null;
++declare var onkeyup: ((this: DomWindow, ev: KeyboardEvent) => any) | null;
+ /**
+  * Fires immediately after the browser loads the object.
+  * @param ev The event.
+  *
+  * [MDN Reference](https://developer.mozilla.org/docs/Web/API/SVGElement/load_event)
+  */
+-declare var onload: ((this: Window, ev: Event) => any) | null;
++declare var onload: ((this: DomWindow, ev: Event) => any) | null;
+ /**
+  * Occurs when media data is loaded at the current playback position.
+  * @param ev The event.
+  *
+  * [MDN Reference](https://developer.mozilla.org/docs/Web/API/HTMLMediaElement/loadeddata_event)
+  */
+-declare var onloadeddata: ((this: Window, ev: Event) => any) | null;
++declare var onloadeddata: ((this: DomWindow, ev: Event) => any) | null;
+ /**
+  * Occurs when the duration and dimensions of the media have been determined.
+  * @param ev The event.
+  *
+  * [MDN Reference](https://developer.mozilla.org/docs/Web/API/HTMLMediaElement/loadedmetadata_event)
+  */
+-declare var onloadedmetadata: ((this: Window, ev: Event) => any) | null;
++declare var onloadedmetadata: ((this: DomWindow, ev: Event) => any) | null;
+ /**
+  * Occurs when Internet Explorer begins looking for media data.
+  * @param ev The event.
+  *
+  * [MDN Reference](https://developer.mozilla.org/docs/Web/API/HTMLMediaElement/loadstart_event)
+  */
+-declare var onloadstart: ((this: Window, ev: Event) => any) | null;
++declare var onloadstart: ((this: DomWindow, ev: Event) => any) | null;
+ /** [MDN Reference](https://developer.mozilla.org/docs/Web/API/Document/lostpointercapture_event) */
+-declare var onlostpointercapture: ((this: Window, ev: PointerEvent) => any) | null;
++declare var onlostpointercapture: ((this: DomWindow, ev: PointerEvent) => any) | null;
+ /**
+  * Fires when the user clicks the object with either mouse button.
+  * @param ev The mouse event.
+  *
+  * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Element/mousedown_event)
+  */
+-declare var onmousedown: ((this: Window, ev: MouseEvent) => any) | null;
++declare var onmousedown: ((this: DomWindow, ev: MouseEvent) => any) | null;
+ /** [MDN Reference](https://developer.mozilla.org/docs/Web/API/Element/mouseenter_event) */
+-declare var onmouseenter: ((this: Window, ev: MouseEvent) => any) | null;
++declare var onmouseenter: ((this: DomWindow, ev: MouseEvent) => any) | null;
+ /** [MDN Reference](https://developer.mozilla.org/docs/Web/API/Element/mouseleave_event) */
+-declare var onmouseleave: ((this: Window, ev: MouseEvent) => any) | null;
++declare var onmouseleave: ((this: DomWindow, ev: MouseEvent) => any) | null;
+ /**
+  * Fires when the user moves the mouse over the object.
+  * @param ev The mouse event.
+  *
+  * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Element/mousemove_event)
+  */
+-declare var onmousemove: ((this: Window, ev: MouseEvent) => any) | null;
++declare var onmousemove: ((this: DomWindow, ev: MouseEvent) => any) | null;
+ /**
+  * Fires when the user moves the mouse pointer outside the boundaries of the object.
+  * @param ev The mouse event.
+  *
+  * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Element/mouseout_event)
+  */
+-declare var onmouseout: ((this: Window, ev: MouseEvent) => any) | null;
++declare var onmouseout: ((this: DomWindow, ev: MouseEvent) => any) | null;
+ /**
+  * Fires when the user moves the mouse pointer into the object.
+  * @param ev The mouse event.
+  *
+  * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Element/mouseover_event)
+  */
+-declare var onmouseover: ((this: Window, ev: MouseEvent) => any) | null;
++declare var onmouseover: ((this: DomWindow, ev: MouseEvent) => any) | null;
+ /**
+  * Fires when the user releases a mouse button while the mouse is over the object.
+  * @param ev The mouse event.
+  *
+  * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Element/mouseup_event)
+  */
+-declare var onmouseup: ((this: Window, ev: MouseEvent) => any) | null;
++declare var onmouseup: ((this: DomWindow, ev: MouseEvent) => any) | null;
+ /** [MDN Reference](https://developer.mozilla.org/docs/Web/API/Element/paste_event) */
+-declare var onpaste: ((this: Window, ev: ClipboardEvent) => any) | null;
++declare var onpaste: ((this: DomWindow, ev: ClipboardEvent) => any) | null;
+ /**
+  * Occurs when playback is paused.
+  * @param ev The event.
+  *
+  * [MDN Reference](https://developer.mozilla.org/docs/Web/API/HTMLMediaElement/pause_event)
+  */
+-declare var onpause: ((this: Window, ev: Event) => any) | null;
++declare var onpause: ((this: DomWindow, ev: Event) => any) | null;
+ /**
+  * Occurs when the play method is requested.
+  * @param ev The event.
+  *
+  * [MDN Reference](https://developer.mozilla.org/docs/Web/API/HTMLMediaElement/play_event)
+  */
+-declare var onplay: ((this: Window, ev: Event) => any) | null;
++declare var onplay: ((this: DomWindow, ev: Event) => any) | null;
+ /**
+  * Occurs when the audio or video has started playing.
+  * @param ev The event.
+  *
+  * [MDN Reference](https://developer.mozilla.org/docs/Web/API/HTMLMediaElement/playing_event)
+  */
+-declare var onplaying: ((this: Window, ev: Event) => any) | null;
++declare var onplaying: ((this: DomWindow, ev: Event) => any) | null;
+ /** [MDN Reference](https://developer.mozilla.org/docs/Web/API/Element/pointercancel_event) */
+-declare var onpointercancel: ((this: Window, ev: PointerEvent) => any) | null;
++declare var onpointercancel: ((this: DomWindow, ev: PointerEvent) => any) | null;
+ /** [MDN Reference](https://developer.mozilla.org/docs/Web/API/Element/pointerdown_event) */
+-declare var onpointerdown: ((this: Window, ev: PointerEvent) => any) | null;
++declare var onpointerdown: ((this: DomWindow, ev: PointerEvent) => any) | null;
+ /** [MDN Reference](https://developer.mozilla.org/docs/Web/API/Element/pointerenter_event) */
+-declare var onpointerenter: ((this: Window, ev: PointerEvent) => any) | null;
++declare var onpointerenter: ((this: DomWindow, ev: PointerEvent) => any) | null;
+ /** [MDN Reference](https://developer.mozilla.org/docs/Web/API/Element/pointerleave_event) */
+-declare var onpointerleave: ((this: Window, ev: PointerEvent) => any) | null;
++declare var onpointerleave: ((this: DomWindow, ev: PointerEvent) => any) | null;
+ /** [MDN Reference](https://developer.mozilla.org/docs/Web/API/Element/pointermove_event) */
+-declare var onpointermove: ((this: Window, ev: PointerEvent) => any) | null;
++declare var onpointermove: ((this: DomWindow, ev: PointerEvent) => any) | null;
+ /** [MDN Reference](https://developer.mozilla.org/docs/Web/API/Element/pointerout_event) */
+-declare var onpointerout: ((this: Window, ev: PointerEvent) => any) | null;
++declare var onpointerout: ((this: DomWindow, ev: PointerEvent) => any) | null;
+ /** [MDN Reference](https://developer.mozilla.org/docs/Web/API/Element/pointerover_event) */
+-declare var onpointerover: ((this: Window, ev: PointerEvent) => any) | null;
++declare var onpointerover: ((this: DomWindow, ev: PointerEvent) => any) | null;
+ /** [MDN Reference](https://developer.mozilla.org/docs/Web/API/Element/pointerup_event) */
+-declare var onpointerup: ((this: Window, ev: PointerEvent) => any) | null;
++declare var onpointerup: ((this: DomWindow, ev: PointerEvent) => any) | null;
+ /**
+  * Occurs to indicate progress while downloading media data.
+  * @param ev The event.
+  *
+  * [MDN Reference](https://developer.mozilla.org/docs/Web/API/HTMLMediaElement/progress_event)
+  */
+-declare var onprogress: ((this: Window, ev: ProgressEvent) => any) | null;
++declare var onprogress: ((this: DomWindow, ev: ProgressEvent) => any) | null;
+ /**
+  * Occurs when the playback rate is increased or decreased.
+  * @param ev The event.
+  *
+  * [MDN Reference](https://developer.mozilla.org/docs/Web/API/HTMLMediaElement/ratechange_event)
+  */
+-declare var onratechange: ((this: Window, ev: Event) => any) | null;
++declare var onratechange: ((this: DomWindow, ev: Event) => any) | null;
+ /**
+  * Fires when the user resets a form.
+  * @param ev The event.
+  *
+  * [MDN Reference](https://developer.mozilla.org/docs/Web/API/HTMLFormElement/reset_event)
+  */
+-declare var onreset: ((this: Window, ev: Event) => any) | null;
++declare var onreset: ((this: DomWindow, ev: Event) => any) | null;
+ /** [MDN Reference](https://developer.mozilla.org/docs/Web/API/HTMLVideoElement/resize_event) */
+-declare var onresize: ((this: Window, ev: UIEvent) => any) | null;
++declare var onresize: ((this: DomWindow, ev: UIEvent) => any) | null;
+ /**
+  * Fires when the user repositions the scroll box in the scroll bar on the object.
+  * @param ev The event.
+  *
+  * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Document/scroll_event)
+  */
+-declare var onscroll: ((this: Window, ev: Event) => any) | null;
++declare var onscroll: ((this: DomWindow, ev: Event) => any) | null;
+ /** [MDN Reference](https://developer.mozilla.org/docs/Web/API/Document/scrollend_event) */
+-declare var onscrollend: ((this: Window, ev: Event) => any) | null;
++declare var onscrollend: ((this: DomWindow, ev: Event) => any) | null;
+ /** [MDN Reference](https://developer.mozilla.org/docs/Web/API/Document/securitypolicyviolation_event) */
+-declare var onsecuritypolicyviolation: ((this: Window, ev: SecurityPolicyViolationEvent) => any) | null;
++declare var onsecuritypolicyviolation: ((this: DomWindow, ev: SecurityPolicyViolationEvent) => any) | null;
+ /**
+  * Occurs when the seek operation ends.
+  * @param ev The event.
+  *
+  * [MDN Reference](https://developer.mozilla.org/docs/Web/API/HTMLMediaElement/seeked_event)
+  */
+-declare var onseeked: ((this: Window, ev: Event) => any) | null;
++declare var onseeked: ((this: DomWindow, ev: Event) => any) | null;
+ /**
+  * Occurs when the current playback position is moved.
+  * @param ev The event.
+  *
+  * [MDN Reference](https://developer.mozilla.org/docs/Web/API/HTMLMediaElement/seeking_event)
+  */
+-declare var onseeking: ((this: Window, ev: Event) => any) | null;
++declare var onseeking: ((this: DomWindow, ev: Event) => any) | null;
+ /**
+  * Fires when the current selection changes.
+  * @param ev The event.
+  *
+  * [MDN Reference](https://developer.mozilla.org/docs/Web/API/HTMLInputElement/select_event)
+  */
+-declare var onselect: ((this: Window, ev: Event) => any) | null;
++declare var onselect: ((this: DomWindow, ev: Event) => any) | null;
+ /** [MDN Reference](https://developer.mozilla.org/docs/Web/API/Document/selectionchange_event) */
+-declare var onselectionchange: ((this: Window, ev: Event) => any) | null;
++declare var onselectionchange: ((this: DomWindow, ev: Event) => any) | null;
+ /** [MDN Reference](https://developer.mozilla.org/docs/Web/API/Node/selectstart_event) */
+-declare var onselectstart: ((this: Window, ev: Event) => any) | null;
++declare var onselectstart: ((this: DomWindow, ev: Event) => any) | null;
+ /** [MDN Reference](https://developer.mozilla.org/docs/Web/API/HTMLSlotElement/slotchange_event) */
+-declare var onslotchange: ((this: Window, ev: Event) => any) | null;
++declare var onslotchange: ((this: DomWindow, ev: Event) => any) | null;
+ /**
+  * Occurs when the download has stopped.
+  * @param ev The event.
+  *
+  * [MDN Reference](https://developer.mozilla.org/docs/Web/API/HTMLMediaElement/stalled_event)
+  */
+-declare var onstalled: ((this: Window, ev: Event) => any) | null;
++declare var onstalled: ((this: DomWindow, ev: Event) => any) | null;
+ /** [MDN Reference](https://developer.mozilla.org/docs/Web/API/HTMLFormElement/submit_event) */
+-declare var onsubmit: ((this: Window, ev: SubmitEvent) => any) | null;
++declare var onsubmit: ((this: DomWindow, ev: SubmitEvent) => any) | null;
+ /**
+  * Occurs if the load operation has been intentionally halted.
+  * @param ev The event.
+  *
+  * [MDN Reference](https://developer.mozilla.org/docs/Web/API/HTMLMediaElement/suspend_event)
+  */
+-declare var onsuspend: ((this: Window, ev: Event) => any) | null;
++declare var onsuspend: ((this: DomWindow, ev: Event) => any) | null;
+ /**
+  * Occurs to indicate the current playback position.
+  * @param ev The event.
+  *
+  * [MDN Reference](https://developer.mozilla.org/docs/Web/API/HTMLMediaElement/timeupdate_event)
+  */
+-declare var ontimeupdate: ((this: Window, ev: Event) => any) | null;
++declare var ontimeupdate: ((this: DomWindow, ev: Event) => any) | null;
+ /** [MDN Reference](https://developer.mozilla.org/docs/Web/API/HTMLDetailsElement/toggle_event) */
+-declare var ontoggle: ((this: Window, ev: Event) => any) | null;
++declare var ontoggle: ((this: DomWindow, ev: Event) => any) | null;
+ /** [MDN Reference](https://developer.mozilla.org/docs/Web/API/Element/touchcancel_event) */
+-declare var ontouchcancel: ((this: Window, ev: TouchEvent) => any) | null | undefined;
++declare var ontouchcancel: ((this: DomWindow, ev: TouchEvent) => any) | null | undefined;
+ /** [MDN Reference](https://developer.mozilla.org/docs/Web/API/Element/touchend_event) */
+-declare var ontouchend: ((this: Window, ev: TouchEvent) => any) | null | undefined;
++declare var ontouchend: ((this: DomWindow, ev: TouchEvent) => any) | null | undefined;
+ /** [MDN Reference](https://developer.mozilla.org/docs/Web/API/Element/touchmove_event) */
+-declare var ontouchmove: ((this: Window, ev: TouchEvent) => any) | null | undefined;
++declare var ontouchmove: ((this: DomWindow, ev: TouchEvent) => any) | null | undefined;
+ /** [MDN Reference](https://developer.mozilla.org/docs/Web/API/Element/touchstart_event) */
+-declare var ontouchstart: ((this: Window, ev: TouchEvent) => any) | null | undefined;
++declare var ontouchstart: ((this: DomWindow, ev: TouchEvent) => any) | null | undefined;
+ /** [MDN Reference](https://developer.mozilla.org/docs/Web/API/Element/transitioncancel_event) */
+-declare var ontransitioncancel: ((this: Window, ev: TransitionEvent) => any) | null;
++declare var ontransitioncancel: ((this: DomWindow, ev: TransitionEvent) => any) | null;
+ /** [MDN Reference](https://developer.mozilla.org/docs/Web/API/Element/transitionend_event) */
+-declare var ontransitionend: ((this: Window, ev: TransitionEvent) => any) | null;
++declare var ontransitionend: ((this: DomWindow, ev: TransitionEvent) => any) | null;
+ /** [MDN Reference](https://developer.mozilla.org/docs/Web/API/Element/transitionrun_event) */
+-declare var ontransitionrun: ((this: Window, ev: TransitionEvent) => any) | null;
++declare var ontransitionrun: ((this: DomWindow, ev: TransitionEvent) => any) | null;
+ /** [MDN Reference](https://developer.mozilla.org/docs/Web/API/Element/transitionstart_event) */
+-declare var ontransitionstart: ((this: Window, ev: TransitionEvent) => any) | null;
++declare var ontransitionstart: ((this: DomWindow, ev: TransitionEvent) => any) | null;
+ /**
+  * Occurs when the volume is changed, or playback is muted or unmuted.
+  * @param ev The event.
+  *
+  * [MDN Reference](https://developer.mozilla.org/docs/Web/API/HTMLMediaElement/volumechange_event)
+  */
+-declare var onvolumechange: ((this: Window, ev: Event) => any) | null;
++declare var onvolumechange: ((this: DomWindow, ev: Event) => any) | null;
+ /**
+  * Occurs when playback stops because the next frame of a video resource is not available.
+  * @param ev The event.
+  *
+  * [MDN Reference](https://developer.mozilla.org/docs/Web/API/HTMLMediaElement/waiting_event)
+  */
+-declare var onwaiting: ((this: Window, ev: Event) => any) | null;
++declare var onwaiting: ((this: DomWindow, ev: Event) => any) | null;
+ /**
+  * @deprecated This is a legacy alias of `onanimationend`.
+  *
+  * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Element/animationend_event)
+  */
+-declare var onwebkitanimationend: ((this: Window, ev: Event) => any) | null;
++declare var onwebkitanimationend: ((this: DomWindow, ev: Event) => any) | null;
+ /**
+  * @deprecated This is a legacy alias of `onanimationiteration`.
+  *
+  * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Element/animationiteration_event)
+  */
+-declare var onwebkitanimationiteration: ((this: Window, ev: Event) => any) | null;
++declare var onwebkitanimationiteration: ((this: DomWindow, ev: Event) => any) | null;
+ /**
+  * @deprecated This is a legacy alias of `onanimationstart`.
+  *
+  * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Element/animationstart_event)
+  */
+-declare var onwebkitanimationstart: ((this: Window, ev: Event) => any) | null;
++declare var onwebkitanimationstart: ((this: DomWindow, ev: Event) => any) | null;
+ /**
+  * @deprecated This is a legacy alias of `ontransitionend`.
+  *
+  * [MDN Reference](https://developer.mozilla.org/docs/Web/API/Element/transitionend_event)
+  */
+-declare var onwebkittransitionend: ((this: Window, ev: Event) => any) | null;
++declare var onwebkittransitionend: ((this: DomWindow, ev: Event) => any) | null;
+ /** [MDN Reference](https://developer.mozilla.org/docs/Web/API/Element/wheel_event) */
+-declare var onwheel: ((this: Window, ev: WheelEvent) => any) | null;
+-/** [MDN Reference](https://developer.mozilla.org/docs/Web/API/Window/afterprint_event) */
+-declare var onafterprint: ((this: Window, ev: Event) => any) | null;
+-/** [MDN Reference](https://developer.mozilla.org/docs/Web/API/Window/beforeprint_event) */
+-declare var onbeforeprint: ((this: Window, ev: Event) => any) | null;
+-/** [MDN Reference](https://developer.mozilla.org/docs/Web/API/Window/beforeunload_event) */
+-declare var onbeforeunload: ((this: Window, ev: BeforeUnloadEvent) => any) | null;
+-/** [MDN Reference](https://developer.mozilla.org/docs/Web/API/Window/gamepadconnected_event) */
+-declare var ongamepadconnected: ((this: Window, ev: GamepadEvent) => any) | null;
+-/** [MDN Reference](https://developer.mozilla.org/docs/Web/API/Window/gamepaddisconnected_event) */
+-declare var ongamepaddisconnected: ((this: Window, ev: GamepadEvent) => any) | null;
+-/** [MDN Reference](https://developer.mozilla.org/docs/Web/API/Window/hashchange_event) */
+-declare var onhashchange: ((this: Window, ev: HashChangeEvent) => any) | null;
+-/** [MDN Reference](https://developer.mozilla.org/docs/Web/API/Window/languagechange_event) */
+-declare var onlanguagechange: ((this: Window, ev: Event) => any) | null;
+-/** [MDN Reference](https://developer.mozilla.org/docs/Web/API/Window/message_event) */
+-declare var onmessage: ((this: Window, ev: MessageEvent) => any) | null;
+-/** [MDN Reference](https://developer.mozilla.org/docs/Web/API/Window/messageerror_event) */
+-declare var onmessageerror: ((this: Window, ev: MessageEvent) => any) | null;
+-/** [MDN Reference](https://developer.mozilla.org/docs/Web/API/Window/offline_event) */
+-declare var onoffline: ((this: Window, ev: Event) => any) | null;
+-/** [MDN Reference](https://developer.mozilla.org/docs/Web/API/Window/online_event) */
+-declare var ononline: ((this: Window, ev: Event) => any) | null;
+-/** [MDN Reference](https://developer.mozilla.org/docs/Web/API/Window/pagehide_event) */
+-declare var onpagehide: ((this: Window, ev: PageTransitionEvent) => any) | null;
+-/** [MDN Reference](https://developer.mozilla.org/docs/Web/API/Window/pageshow_event) */
+-declare var onpageshow: ((this: Window, ev: PageTransitionEvent) => any) | null;
+-/** [MDN Reference](https://developer.mozilla.org/docs/Web/API/Window/popstate_event) */
+-declare var onpopstate: ((this: Window, ev: PopStateEvent) => any) | null;
+-/** [MDN Reference](https://developer.mozilla.org/docs/Web/API/Window/rejectionhandled_event) */
+-declare var onrejectionhandled: ((this: Window, ev: PromiseRejectionEvent) => any) | null;
+-/** [MDN Reference](https://developer.mozilla.org/docs/Web/API/Window/storage_event) */
+-declare var onstorage: ((this: Window, ev: StorageEvent) => any) | null;
+-/** [MDN Reference](https://developer.mozilla.org/docs/Web/API/Window/unhandledrejection_event) */
+-declare var onunhandledrejection: ((this: Window, ev: PromiseRejectionEvent) => any) | null;
+-/** [MDN Reference](https://developer.mozilla.org/docs/Web/API/Window/unload_event) */
+-declare var onunload: ((this: Window, ev: Event) => any) | null;
+-/** [MDN Reference](https://developer.mozilla.org/docs/Web/API/Window/localStorage) */
++declare var onwheel: ((this: DomWindow, ev: WheelEvent) => any) | null;
++/** [MDN Reference](https://developer.mozilla.org/docs/Web/API/DomWindow/afterprint_event) */
++declare var onafterprint: ((this: DomWindow, ev: Event) => any) | null;
++/** [MDN Reference](https://developer.mozilla.org/docs/Web/API/DomWindow/beforeprint_event) */
++declare var onbeforeprint: ((this: DomWindow, ev: Event) => any) | null;
++/** [MDN Reference](https://developer.mozilla.org/docs/Web/API/DomWindow/beforeunload_event) */
++declare var onbeforeunload: ((this: DomWindow, ev: BeforeUnloadEvent) => any) | null;
++/** [MDN Reference](https://developer.mozilla.org/docs/Web/API/DomWindow/gamepadconnected_event) */
++declare var ongamepadconnected: ((this: DomWindow, ev: GamepadEvent) => any) | null;
++/** [MDN Reference](https://developer.mozilla.org/docs/Web/API/DomWindow/gamepaddisconnected_event) */
++declare var ongamepaddisconnected: ((this: DomWindow, ev: GamepadEvent) => any) | null;
++/** [MDN Reference](https://developer.mozilla.org/docs/Web/API/DomWindow/hashchange_event) */
++declare var onhashchange: ((this: DomWindow, ev: HashChangeEvent) => any) | null;
++/** [MDN Reference](https://developer.mozilla.org/docs/Web/API/DomWindow/languagechange_event) */
++declare var onlanguagechange: ((this: DomWindow, ev: Event) => any) | null;
++/** [MDN Reference](https://developer.mozilla.org/docs/Web/API/DomWindow/message_event) */
++declare var onmessage: ((this: DomWindow, ev: MessageEvent) => any) | null;
++/** [MDN Reference](https://developer.mozilla.org/docs/Web/API/DomWindow/messageerror_event) */
++declare var onmessageerror: ((this: DomWindow, ev: MessageEvent) => any) | null;
++/** [MDN Reference](https://developer.mozilla.org/docs/Web/API/DomWindow/offline_event) */
++declare var onoffline: ((this: DomWindow, ev: Event) => any) | null;
++/** [MDN Reference](https://developer.mozilla.org/docs/Web/API/DomWindow/online_event) */
++declare var ononline: ((this: DomWindow, ev: Event) => any) | null;
++/** [MDN Reference](https://developer.mozilla.org/docs/Web/API/DomWindow/pagehide_event) */
++declare var onpagehide: ((this: DomWindow, ev: PageTransitionEvent) => any) | null;
++/** [MDN Reference](https://developer.mozilla.org/docs/Web/API/DomWindow/pageshow_event) */
++declare var onpageshow: ((this: DomWindow, ev: PageTransitionEvent) => any) | null;
++/** [MDN Reference](https://developer.mozilla.org/docs/Web/API/DomWindow/popstate_event) */
++declare var onpopstate: ((this: DomWindow, ev: PopStateEvent) => any) | null;
++/** [MDN Reference](https://developer.mozilla.org/docs/Web/API/DomWindow/rejectionhandled_event) */
++declare var onrejectionhandled: ((this: DomWindow, ev: PromiseRejectionEvent) => any) | null;
++/** [MDN Reference](https://developer.mozilla.org/docs/Web/API/DomWindow/storage_event) */
++declare var onstorage: ((this: DomWindow, ev: StorageEvent) => any) | null;
++/** [MDN Reference](https://developer.mozilla.org/docs/Web/API/DomWindow/unhandledrejection_event) */
++declare var onunhandledrejection: ((this: DomWindow, ev: PromiseRejectionEvent) => any) | null;
++/** [MDN Reference](https://developer.mozilla.org/docs/Web/API/DomWindow/unload_event) */
++declare var onunload: ((this: DomWindow, ev: Event) => any) | null;
++/** [MDN Reference](https://developer.mozilla.org/docs/Web/API/DomWindow/localStorage) */
+ declare var localStorage: Storage;
+ /**
+  * Available only in secure contexts.
+@@ -27949,11 +27949,11 @@ declare function setInterval(handler: TimerHandler, timeout?: number, ...argumen
+ declare function setTimeout(handler: TimerHandler, timeout?: number, ...arguments: any[]): number;
+ /** [MDN Reference](https://developer.mozilla.org/docs/Web/API/structuredClone) */
+ declare function structuredClone<T = any>(value: T, options?: StructuredSerializeOptions): T;
+-/** [MDN Reference](https://developer.mozilla.org/docs/Web/API/Window/sessionStorage) */
++/** [MDN Reference](https://developer.mozilla.org/docs/Web/API/DomWindow/sessionStorage) */
+ declare var sessionStorage: Storage;
+-declare function addEventListener<K extends keyof WindowEventMap>(type: K, listener: (this: Window, ev: WindowEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
++declare function addEventListener<K extends keyof WindowEventMap>(type: K, listener: (this: DomWindow, ev: WindowEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+ declare function addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+-declare function removeEventListener<K extends keyof WindowEventMap>(type: K, listener: (this: Window, ev: WindowEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
++declare function removeEventListener<K extends keyof WindowEventMap>(type: K, listener: (this: DomWindow, ev: WindowEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+ declare function removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
+ type AlgorithmIdentifier = Algorithm | string;
+ type AllowSharedBufferSource = ArrayBuffer | ArrayBufferView;
+@@ -28024,7 +28024,7 @@ type TimerHandler = string | Function;
+ type Transferable = OffscreenCanvas | ImageBitmap | MessagePort | ReadableStream | WritableStream | TransformStream | VideoFrame | ArrayBuffer;
+ type Uint32List = Uint32Array | GLuint[];
+ type VibratePattern = number | number[];
+-type WindowProxy = Window;
++type WindowProxy = DomWindow;
+ type XMLHttpRequestBodyInit = Blob | BufferSource | FormData | URLSearchParams | string;
+ type AlignSetting = "center" | "end" | "left" | "right" | "start";
+ type AlphaOption = "discard" | "keep";

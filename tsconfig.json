@@ -1,0 +1,8 @@
+{
+  "compilerOptions": {
+    "target": "ES5",
+    "lib": ["ESNext", "DOM"],
+    "types": ["rmmv-types", "pixi.js", "fpsmeter"],
+    "noImplicitThis": true
+  }
+}

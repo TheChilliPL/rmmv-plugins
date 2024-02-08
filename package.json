@@ -1,0 +1,16 @@
+{
+  "name": "rmmv-plugins",
+  "scripts": {
+    "build": "tsc --build",
+    "postinstall": "npx patch-package"
+  },
+  "dependencies": {
+    "@types/fpsmeter": "0.3.30",
+    "@types/pixi.js": "4.5.4",
+    "rmmv-types": "github:TheChilliPL/rmmv-types#dev",
+    "typescript": "^5.3.3"
+  },
+  "devDependencies": {
+    "patch-package": "^8.0.0"
+  }
+}
