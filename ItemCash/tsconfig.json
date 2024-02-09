@@ -1,0 +1,8 @@
+{
+  "extends": "../tsconfig.json",
+  "include": ["src/params.ts", "src/*.ts"],
+  "compilerOptions": {
+    "rootDir": "./src",
+    "outFile": "CLL_ItemCash.js"
+  }
+}

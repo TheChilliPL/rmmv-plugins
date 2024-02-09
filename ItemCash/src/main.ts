@@ -1,21 +1,21 @@
-/*:
- * @plugindesc Use items as money!
- * @author TheChilliPL
- *
- * @param items
- * @text Items
- * @desc List of items that can be used as money. The cost of the item will be used as its value.
- * @type item[]
- */
-
 namespace CLL.ItemCash {
-  interface CashItem {
+  function assertNever(x: never): never {
+    throw new Error("Unexpected object: " + x);
+  }
+
+  export interface CashItem {
+    name: string;
     item: number;
     value: number;
   }
 
+  export const enum ChangeAlgorithm {
+    Greedy = "greedy",
+  }
+
   export const parameters = PluginManager.parameters("CLL_ItemCash");
   export let cashItems: CashItem[] = [];
+  export let changeAlgorithm = ChangeAlgorithm.Greedy;
 
   let DataManager_onLoad = DataManager.onLoad;
   DataManager.onLoad = function (object: object | object[]) {
@@ -28,6 +28,7 @@ namespace CLL.ItemCash {
         throw new Error(`Item with id ${itemId} does not exist.`);
       }
       return {
+        name: item.name,
         item: Number(itemId),
         value: item.price,
       };
@@ -48,4 +49,32 @@ namespace CLL.ItemCash {
       return sum + (value ? value * amount : 0);
     }, 0);
   };
+
+  export function findChangeGreedy(
+    money: number
+  ): { item: CashItem; amount: number }[] {
+    const sortedCashItems = cashItems.sort((a, b) => b.value - a.value);
+    const change: { item: CashItem; amount: number }[] = [];
+
+    for (const cashItem of sortedCashItems) {
+      const amount = Math.floor(money / cashItem.value);
+      if (amount > 0) {
+        change.push({ item: cashItem, amount });
+        money -= amount * cashItem.value;
+      }
+    }
+
+    return change;
+  }
+
+  export function findChange(
+    money: number
+  ): { item: CashItem; amount: number }[] {
+    switch (changeAlgorithm) {
+      case ChangeAlgorithm.Greedy:
+        return findChangeGreedy(money);
+      default:
+        assertNever(changeAlgorithm);
+    }
+  }
 }
